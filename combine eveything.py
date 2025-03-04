@@ -68,6 +68,7 @@ fig_scatter.update_traces(
 
 # Initialize the Dash app with Bootstrap styling.
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 # App layout: scatter plot and parallel plot side-by-side on top; data table at the bottom.
 app.layout = html.Div([
