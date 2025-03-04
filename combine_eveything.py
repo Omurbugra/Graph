@@ -6,7 +6,8 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 # Load your dataset. Update the path as needed.
-df = pd.read_csv("parallel - combine.csv")
+csv_url = "https://raw.githubusercontent.com/Omurbugra/Graph/eb1cfa7c2bfb19d2ec64e058472163b443b6bfb5/parallel%20-%20Combine.csv"
+df = pd.read_csv(csv_url)
 
 # Check for an ID column in a case-insensitive manner.
 id_column = None
