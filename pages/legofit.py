@@ -7,7 +7,7 @@ from dash.dash_table.Format import Format, Scheme
 register_page(__name__, path='/')
 
 #datase
-df = pd.read_csv(r"pages\lux_sim14000_ResAll_buildingTotal_shuffled.csv")
+df = pd.read_csv("pages/lux_sim14000_ResAll_buildingTotal_shuffled.csv")
 
 #ID column
 id_column = None
