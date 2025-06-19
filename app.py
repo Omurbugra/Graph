@@ -71,5 +71,7 @@ app.layout = dbc.Container([
 import callbacks
 import callbacks_legofit2
 
+server = app.server
+
 if __name__ == "__main__":
     app.run_server(debug=True)
