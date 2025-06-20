@@ -6,10 +6,10 @@ from dash.dash_table.Format import Format, Scheme
 
 register_page(__name__, path='/')
 
-#datase
-df = pd.read_csv("pages/lux_sim14000_ResAll_buildingTotal_shuffled.csv")
+# dataset
+df = pd.read_csv("pages\lux_sim14000_ResAll_buildingTotal_shuffled.csv")
 
-#ID column
+# ID column
 id_column = None
 for col in df.columns:
     if col.strip().lower() == "version":
@@ -22,7 +22,7 @@ if id_column is None:
 # labels for the parallel coordinates plot
 labels = {col: col.replace('_', ' ').title() for col in df.columns}
 
-#last column for the color scale
+# last column for the color scale
 color_col = df.columns[-1]
 
 # Remove the first column (ID)
@@ -56,7 +56,6 @@ def create_scatter_figure(option_key):
     option = scatter_options[option_key]
     x_col = option["x"]
     y_col = option["y"]
-    # Ensure numeric columns.
     df[x_col] = pd.to_numeric(df[x_col], errors='coerce')
     df[y_col] = pd.to_numeric(df[y_col], errors='coerce')
     fig = px.scatter(
@@ -98,11 +97,39 @@ DROPDOWN_STYLE = {"position": "absolute", "top": "480px", "left": "10px",
 CHECKBOX_STYLE = {"position": "absolute", "zIndex": "1000", "backgroundColor": "rgba(236, 240, 241, 0)",
                   "padding": "5px", "borderRadius": "5px"}
 
+# simple info icon component
+def info_icon(id_str):
+    return html.Span("i", id=id_str, style={
+        "display": "inline-block",
+        "width": "16px",
+        "height": "16px",
+        "borderRadius": "50%",
+        "backgroundColor": "#ccc",
+        "color": "white",
+        "fontSize": "12px",
+        "textAlign": "center",
+        "lineHeight": "16px",
+        "marginRight": "8px",
+        "cursor": "pointer"
+    })
+
 layout = dbc.Container([
     dbc.Row([
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Total Ideal Loads"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Total Ideal Loads", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-total", style={
+                            "color": "white", "marginLeft": "10px",
+                            "cursor": "pointer",
+                            "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This scatter plot compares total cooling vs. heating demands.",
+                            target="tip-total", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="scatter-plot", figure=fig_scatter),
                 ])
@@ -111,7 +138,19 @@ layout = dbc.Container([
         ),
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Parallel Coordinates Plot"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Parallel Coordinates Plot", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-parallel", style={
+                            "color": "white", "marginLeft": "10px",
+                            "cursor": "pointer",
+                            "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This parallel plot shows multiple simulation dimensions.",
+                            target="tip-parallel", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="parallel-plot", figure=fig_parallel)
                 ])
@@ -122,7 +161,19 @@ layout = dbc.Container([
     dbc.Row([
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Instance Table"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Instance Table", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-table", style={
+                            "color": "white", "marginLeft": "10px",
+                            "cursor": "pointer",
+                            "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This table displays simulation data and allows selection.",
+                            target="tip-table", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Div([
                         dcc.Checklist(
@@ -172,7 +223,19 @@ layout = dbc.Container([
         ),
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("3D Model"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("3D Model", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-model", style={
+                            "color": "white", "marginLeft": "10px",
+                            "cursor": "pointer",
+                            "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This embedded view displays the 3D design model.",
+                            target="tip-model", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Iframe(src="https://omurbugra.github.io/Graph3dv2",
                                 style={"width": "100%", "height": "414px", "border": "none", "borderRadius": "0px"})
@@ -182,3 +245,4 @@ layout = dbc.Container([
         )
     ])
 ], fluid=True, style={"backgroundColor": "#FFFFFF", "padding": "20px"})
+
