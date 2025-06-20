@@ -6,10 +6,10 @@ from dash.dash_table.Format import Format, Scheme
 
 register_page(__name__, path='/legofit2')
 
-#legofit2 dataset
-df = pd.read_csv("pages/paretoComp_II_combine_neworder.csv")
+# dataset
+df = pd.read_csv("pages\paretoComp_II_combine_neworder.csv")
 
-#for an ID colum
+# ID column
 id_column = None
 for col in df.columns:
     if col.strip().lower() == "version":
@@ -21,12 +21,10 @@ if id_column is None:
 
 # labels.
 labels = {col: col.replace('_', ' ').title() for col in df.columns}
-
-# last column for color.
 color_col = df.columns[-1]
-
 dimensions_to_plot = list(df.columns[1:])
 
+# Parallel Coordinates Plot
 fig_parallel = px.parallel_coordinates(
     df,
     dimensions=dimensions_to_plot,
@@ -84,7 +82,7 @@ def create_scatter_figure(option_key):
 initial_scatter_option = "Scatter 1"
 fig_scatter = create_scatter_figure(initial_scatter_option)
 
-# Custom styles
+# Styles
 CARDHEADER_STYLE = {"backgroundColor": "#2AACFD", "color": "white",
                     "borderRadius": "0px", "borderBottom": "1px solid #2C3E50",
                     "boxShadow": "0 2px 4px rgba(0, 0, 0, 0.5)"}
@@ -96,11 +94,22 @@ DROPDOWN_STYLE = {"position": "absolute", "top": "480px", "left": "10px",
 CHECKBOX_STYLE = {"position": "absolute", "zIndex": "1000", "backgroundColor": "rgba(236, 240, 241, 0)",
                   "padding": "5px", "borderRadius": "5px"}
 
+# Layout
 layout = dbc.Container([
     dbc.Row([
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Total Ideal Loads"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Total Ideal Loads", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-total2", style={
+                            "color": "white", "marginLeft": "10px", "cursor": "pointer", "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This scatter plot compares total cooling vs. heating demands.",
+                            target="tip-total2", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="scatter-plot-legofit2", figure=fig_scatter),
                 ])
@@ -109,7 +118,17 @@ layout = dbc.Container([
         ),
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Parallel Coordinates Plot"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Parallel Coordinates Plot", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-parallel2", style={
+                            "color": "white", "marginLeft": "10px", "cursor": "pointer", "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This parallel plot shows multiple simulation dimensions.",
+                            target="tip-parallel2", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="parallel-plot-legofit2", figure=fig_parallel)
                 ])
@@ -120,7 +139,17 @@ layout = dbc.Container([
     dbc.Row([
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("Instance Table"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("Instance Table", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-table2", style={
+                            "color": "white", "marginLeft": "10px", "cursor": "pointer", "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This table displays simulation data and allows selection.",
+                            target="tip-table2", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Div([
                         dcc.Checklist(
@@ -170,7 +199,17 @@ layout = dbc.Container([
         ),
         dbc.Col(
             dbc.Card([
-                dbc.CardHeader(html.H5("3D Model"), style=CARDHEADER_STYLE),
+                dbc.CardHeader(
+                    html.Div([
+                        html.Span("3D Model", style={"fontWeight": "bold"}),
+                        html.Span("ⓘ", id="tip-model2", style={
+                            "color": "white", "marginLeft": "10px", "cursor": "pointer", "fontSize": "18px"
+                        })
+                    ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
+                    style=CARDHEADER_STYLE
+                ),
+                dbc.Tooltip("This embedded view displays the 3D design model.",
+                            target="tip-model2", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Iframe(src="https://omurbugra.github.io/Graph3dv2",
                                 style={"width": "100%", "height": "414px", "border": "none", "borderRadius": "0px"})
