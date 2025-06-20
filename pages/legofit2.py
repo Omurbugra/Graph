@@ -7,7 +7,7 @@ from dash.dash_table.Format import Format, Scheme
 register_page(__name__, path='/legofit2')
 
 # dataset
-df = pd.read_csv("pages\paretoComp_II_combine_neworder.csv")
+df = pd.read_csv("pages/paretoComp_II_combine_neworder.csv")
 
 # ID column
 id_column = None
