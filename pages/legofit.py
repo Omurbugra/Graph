@@ -128,7 +128,7 @@ layout = dbc.Container([
                     ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
                     style=CARDHEADER_STYLE
                 ),
-                dbc.Tooltip("This scatter plot compares total cooling vs. heating demands.",
+                dbc.Tooltip("This scatter plot visualizes the relationship between total cooling and heating loads. Use it to detect clusters, outliers, and optimal instances in your dataset. You can filter outputs by selecting them.",
                             target="tip-total", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="scatter-plot", figure=fig_scatter),
@@ -149,7 +149,7 @@ layout = dbc.Container([
                     ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
                     style=CARDHEADER_STYLE
                 ),
-                dbc.Tooltip("This parallel plot shows multiple simulation dimensions.",
+                dbc.Tooltip("This parallel coordinates plot reveals multi-variable relationships across the full dataset. Use axis brushing to filter and explore correlations among high-dimensional parameters.",
                             target="tip-parallel", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     dcc.Graph(id="parallel-plot", figure=fig_parallel)
@@ -172,7 +172,7 @@ layout = dbc.Container([
                     ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
                     style=CARDHEADER_STYLE
                 ),
-                dbc.Tooltip("This table displays simulation data and allows selection.",
+                dbc.Tooltip("This table shows detailed raw data of each design instance. You can sort, filter, and select rows to inspect parameter combinations or sync them with the plots.",
                             target="tip-table", placement="right-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Div([
@@ -234,7 +234,7 @@ layout = dbc.Container([
                     ], style={"display": "flex", "justifyContent": "space-between", "alignItems": "center"}),
                     style=CARDHEADER_STYLE
                 ),
-                dbc.Tooltip("This embedded view displays the 3D design model.",
+                dbc.Tooltip("This 3D model viewer links numeric simulation outputs to building geometry. You can interact with it.",
                             target="tip-model", placement="left-start", style={"zIndex": 3000}),
                 dbc.CardBody([
                     html.Iframe(src="https://omurbugra.github.io/Graph3dv2",
