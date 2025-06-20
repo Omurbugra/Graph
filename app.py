@@ -11,36 +11,48 @@ NAVBAR_STYLE = {
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], use_pages=True)
 
-header = dbc.Navbar(
-    dbc.Container(
-        dbc.Row([
-            dbc.Col(
-                html.Img(
-                    src="https://www.legofit.eu/wp-content/uploads/2023/09/white.svg",
-                    height="60px"
-                ),
-                width="auto"
-            ),
-            dbc.Col(
-                html.Div([
-                    html.Div(
-                        "Adaptable technological solutions based on early design actions for",
-                        style={"fontSize": "1em", "fontWeight": "500", "color": "white"}
-                    ),
-                    html.Div(
-                        "the construction and renovation of Energy Positive Homes",
-                        style={"fontSize": "1em", "fontWeight": "500", "color": "white"}
-                    )
-                ]),
-                width="auto", style={"marginLeft": "10px"}
-            )
-        ], align="center", className="w-100 flex-nowrap"),
-        fluid=True
+header = html.Header(
+    html.Div(
+        style={
+            "display": "flex",
+            "justifyContent": "space-between",
+            "alignItems": "flex-end",
+            "padding": "8px 25px",
+            "height": "100%"  # içerik dikey hizalansın
+        },
+        children=[
+            html.H1([
+                "⚡ Energy+ Parametric Dashboard",
+                html.Span(
+                    "  by Ömür Buğra Gündüz",
+                    style={
+                        "fontSize": "0.66rem",       # yaklaşık 1/3
+                        "color": "#FFFFFF",
+                        "marginLeft": "8px",
+                        "verticalAlign": "baseline"
+                    }
+                )
+            ],
+            style={
+                "fontSize": "2rem",
+                "fontWeight": "bold",
+                "color": "white",
+                "margin": 0
+            }),
+        ]
     ),
-    style=NAVBAR_STYLE,
-    color="#2C3E50",
-    className="mb-2"
+    style={
+        "background": "#2AACFD",
+        "boxShadow": "0 2px 6px rgba(0, 0, 0, 0.4)",
+        "position": "fixed",
+        "top": "0",
+        "width": "100vw",
+        "left": 0,
+        "zIndex": "1000",
+        "height": "55px"
+    }
 )
+
 
 # Grouped tabs container
 tabs_container = html.Div(
@@ -57,7 +69,7 @@ tabs_container = html.Div(
 
 combined_header = html.Div(
     [header, tabs_container],
-    style={"marginTop": "10px"}
+    style={"marginTop": "80px"}  # accounts for fixed header height
 )
 
 app.layout = dbc.Container([
